@@ -24,7 +24,7 @@ public class PedidosController {
     }//list
 
     @GetMapping(path = "{id_order}")
-    public Pedidos getPedidos(@PathVariable("id_order") int id_order) {
+    public Pedidos getPedidos(@PathVariable("id_order") Long id_order) {
         return pedidosService.getPedidos(id_order);
     }
 
@@ -34,16 +34,16 @@ public class PedidosController {
     }
 
     @DeleteMapping(path = "{id_order}")
-    public Pedidos deletePedidos(@PathVariable("id_order") int id_order) {
+    public Pedidos deletePedidos(@PathVariable("id_order") Long id_order) {
         return pedidosService.deletePedidos(id_order);
     }
 
     @PutMapping(path = "{id_order}")
     public Pedidos updatePedidos(
-            @PathVariable("id_order") int id_order,
-            @RequestParam(required = false) Integer users_id_user,
-            @RequestParam(required = false) Integer id_producto,
-            @RequestParam(required = false) Integer amount,
+            @PathVariable("id_order") Long id_order,
+            @RequestParam(required = false) Long users_id_user,
+            @RequestParam(required = false) Long id_producto,
+            @RequestParam(required = false) Double amount,
             @RequestParam(required = false) String order_date) {
 
         return pedidosService.upDatePedidos(id_order, users_id_user, id_producto, amount, order_date);

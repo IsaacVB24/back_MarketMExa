@@ -1,53 +1,55 @@
 package com.marketmexa.proyecto.model;
 
 public class Pedidos {
-
-	private int id_order;
-	private int users_id_user;
-	private int id_producto;
-	private int amount;
+//wrapper
+	private Long id_order;
+	private Long users_id_user;
+	private Long id_producto;
+	private Double amount;
 	private String order_date;
+	private static Long cont = Long.valueOf(0);
 	
-	public Pedidos(int id_order, int users_id_user, int id_producto, int amount, String order_date) {
+	public Pedidos(Long users_id_user, Long id_producto, Double amount, String order_date) {
 		super();
-		this.id_order = id_order;
+		this.id_order = ++cont;
 		this.users_id_user = users_id_user;
 		this.id_producto = id_producto;
 		this.amount = amount;
 		this.order_date = order_date;
+		
 	}//public pedidos
 	
-	public Pedidos() {};//constructor vacio
-
-	public int getId_order() {
+	public Pedidos() {
+		this.id_order = ++cont;
+	};//constructor vacio
+	
+	
+//getter setter
+	public Long getId_order() {
 		return id_order;
 	}
 
-	public void setId_order(int id_order) {
-		this.id_order = id_order;
-	}
-
-	public int getUsers_id_user() {
+	public Long getUsers_id_user() {
 		return users_id_user;
 	}
 
-	public void setUsers_id_user(int users_id_user) {
+	public void setUsers_id_user(Long users_id_user) {
 		this.users_id_user = users_id_user;
 	}
 
-	public int getId_producto() {
+	public Long getId_producto() {
 		return id_producto;
 	}
 
-	public void setId_producto(int id_producto) {
+	public void setId_producto(Long id_producto) {
 		this.id_producto = id_producto;
 	}
 
-	public int getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 

@@ -18,7 +18,7 @@ public class PedidosService {
     }//list
 
     // Obtener un pedido por ID
-    public Pedidos getPedidos(int id_order) {
+    public Pedidos getPedidos(Long id_order) {
         Optional<Pedidos> pedido = pedidosList.stream()
                 .filter(p -> p.getId_order() == id_order)
                 .findFirst();
@@ -32,7 +32,7 @@ public class PedidosService {
     }//add
 
     // Eliminar un pedido por ID
-    public Pedidos deletePedidos(int id_order) {
+    public Pedidos deletePedidos(Long id_order) {
         Pedidos pedido = getPedidos(id_order);
         if (pedido != null) {
             pedidosList.remove(pedido);
@@ -41,7 +41,7 @@ public class PedidosService {
     }//delete
 
     // Actualizar un pedido existente
-    public Pedidos upDatePedidos(int id_order, Integer users_id_user, Integer id_producto, Integer amount, String order_date) {
+    public Pedidos upDatePedidos(Long id_order, Long users_id_user, Long id_producto, Double amount, String order_date) {
         Pedidos pedido = getPedidos(id_order);
         if (pedido != null) {
             if (users_id_user != null) pedido.setUsers_id_user(users_id_user);
