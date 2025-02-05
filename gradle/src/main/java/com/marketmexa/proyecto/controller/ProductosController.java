@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marketmexa.proyecto.model.Productos;
+import com.marketmexa.proyecto.service.ProductosService;
 
 @RestController
 @RequestMapping(path="/api/productos/") // http://localhost:8080/api/productos
