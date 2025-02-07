@@ -1,18 +1,32 @@
 package com.marketmexa.proyecto.model;
 
-public class Productos {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="products")
+public class Productos {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(nullable=false, unique = true, name="id_products")
     private Long id;
+    @Column(nullable=false, unique = true, name="product_name")
     private String nombre;
+    @Column(nullable=false, unique = true, name="product_description")
     private String descripcion;
+    @Column(nullable=false, unique = true, name="product_image")
     private String imagen;
+    @Column(nullable=false, unique = true, name="product_price")
     private Double precio;
+    @Column(nullable=false, unique = true, name="product_stock")
     private Integer stock;
-    private static Long cont =Long.valueOf(0);
-    
+   
     // Constructor con todos los parámetros excepto el ID
     public Productos(String nombre, String descripcion, String imagen, Double precio, Integer stock) {
-        this.id= ++cont;      
     	this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -23,7 +37,6 @@ public class Productos {
 
     // Constructor 
     public Productos() {
-    	this.id = ++cont;
     }
 
     // Getters y Setters
