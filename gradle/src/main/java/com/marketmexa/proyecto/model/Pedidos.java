@@ -1,17 +1,30 @@
 package com.marketmexa.proyecto.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "orders")
 public class Pedidos {
-//wrapper
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_order", unique = true, nullable = false)
 	private Long id_order;
+	@Column(nullable = false)
 	private Long users_id_user;
+	@Column(nullable = false)
 	private Long id_producto;
+	@Column(nullable = false)
 	private Double amount;
+	@Column(nullable = false)
 	private String order_date;
-	private static Long cont = Long.valueOf(0);
 	
 	public Pedidos(Long users_id_user, Long id_producto, Double amount, String order_date) {
 		super();
-		this.id_order = ++cont;
 		this.users_id_user = users_id_user;
 		this.id_producto = id_producto;
 		this.amount = amount;
@@ -20,7 +33,6 @@ public class Pedidos {
 	}//public pedidos
 	
 	public Pedidos() {
-		this.id_order = ++cont;
 	};//constructor vacio
 	
 	
