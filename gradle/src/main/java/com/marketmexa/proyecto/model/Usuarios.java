@@ -3,7 +3,6 @@ package com.marketmexa.proyecto.model; //USERS
 import java.time.LocalDate;
 
 public class Usuarios {
-    private static Long cont = Long.valueOf(0);
     private Long id;
     private String name;
     private String email;
@@ -13,12 +12,10 @@ public class Usuarios {
     private LocalDate user_registred;
 
     public Usuarios() {
-        this.id = ++cont;
     }
 
     public Usuarios(String name, String email, String phone, String pass, String address, LocalDate user_registred) {
         super();
-        this.id = ++cont;
         this.name = name;
         this.email = email;
         this.phone = phone;
