@@ -3,6 +3,7 @@ package com.marketmexa.proyecto.service;  //SERVICES
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.marketmexa.proyecto.model.Usuarios;
 import org.springframework.stereotype.Service;
@@ -77,4 +78,13 @@ public class UsuariosService {
         }
         return usuario;  // Vientos
     }
+
+    public boolean validateUser(Usuarios usuario) {
+		Optional<Usuarios> user = usuariosRepository.findByEmail(usuario.getEmail());
+		if(user.isPresent()) {
+			Usuarios tmpUser = user.get();
+			if(tmpUser.getPass().equals(usuario.getPass())) return true;
+		}
+		return false;
+	}
 }
