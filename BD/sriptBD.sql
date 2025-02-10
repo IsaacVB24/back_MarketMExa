@@ -12,22 +12,23 @@ CREATE TABLE `users` (
     `id_user` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `name` VARCHAR(50) NOT NULL,
     `email` VARCHAR(50) NOT NULL UNIQUE,
-     `phone` VARCHAR(50) NOT NULL UNIQUE,
+    `phone` VARCHAR(50) NOT NULL UNIQUE,
     `pass` VARCHAR(60) NOT NULL,
-    `user_registred` DATE NOT NULL,
-    `address` VARCHAR(100) NOT NULL
+    `user_registred` DATE NOT NULL DEFAULT (CURRENT_DATE),
+    `addres` VARCHAR(100) NOT NULL
 );
+
+
 -- -------------------------------------------
 -- Crear tabla products ----------------------
 -- -------------------------------------------
 CREATE TABLE `products` (
-	`id_products` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    `product_name` VARCHAR(100) NOT NULL,
-        `product_description` VARCHAR(500) NOT NULL,
-         `product_price` FLOAT NOT NULL,
-         `product_category` VARCHAR(10) NOT NULL,
-          `product_stock` INT NOT NULL,
-          `product_image` VARCHAR(100) NOT NULL
+	`id_productos` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL,
+    `description` VARCHAR(500),
+	`image` VARCHAR(100) NOT NULL,
+    `price` FLOAT NOT NULL,
+    `stock` INT NOT NULL
           );        
           
 CREATE TABLE `orders` (
@@ -38,3 +39,5 @@ CREATE TABLE `orders` (
     `order_date` DATETIME NOT NULL
 );
 -- DROP DATABASE market_mexa;
+
+
