@@ -2,6 +2,7 @@ package com.marketmexa.proyecto.controller; //CONTROLLER
 
 import java.util.List;
 
+import com.marketmexa.proyecto.dto.ChangePassword;
 import com.marketmexa.proyecto.model.Usuarios;
 import com.marketmexa.proyecto.service.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +41,14 @@ public class UsuariosController {
     public Usuarios agregarUsuario(@RequestBody Usuarios usuario) {
         return usuariosService.addUsuario(usuario);  // La fecha de registro ya se pasa desde el cliente
     }
-
+    
     // Actualiza usuarios
-   // @PutMapping(path = "{usuarioId}")
-    //public Usuarios actualizarUsuario(
-      //      @PathVariable("usuarioId") Long id,
-        //    @RequestParam(required = false) String name,
-          //  @RequestParam(required = false) String email,
-            //@RequestParam(required = false) String phone,
-            //@RequestParam(required = false) String pass,
-            //@RequestParam(required = false) String address,
-            //@RequestParam(required = false) String userRegistred) {
-        //return usuariosService.actualizarUsuario(id, name, email, phone, pass, address, userRegistred);
-    //}
+    
+    @PutMapping(path = "{usuarioId}")
+    public Usuarios actualizarUsuario(@RequestBody ChangePassword changePassword, @PathVariable ("usuarioId") Long id) {
+    	
+    	return usuariosService.updateUsuario(id, changePassword);
+    
+    }
+        
 }

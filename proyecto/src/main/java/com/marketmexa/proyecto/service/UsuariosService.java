@@ -9,10 +9,15 @@ import com.marketmexa.proyecto.model.Usuarios;
 import com.marketmexa.proyecto.repository.UsuariosRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsuariosService {
+	
+	@Autowired
+	private PasswordEncoder encoder;
+	
     // Lista para almacenar los usuarios
 	private final UsuariosRepository usuariosRepository;
 	
@@ -53,8 +58,11 @@ public Usuarios deleteUsuario(Long id) {
 		Optional<Usuarios> user = usuariosRepository.findByEmail(usuario.getEmail());
 		if(user.isPresent()) {
 			Usuarios tmpUser = user.get();
-			if(tmpUser.getPass().equals(usuario.getPass())) return true;
-		}
+			//			if(tmpUser.getPass().equals(usuario.getPass())) 
+             if(encoder.matches(usuario.getPass(), tmpUser.getPass())){
+            	 return true;
+}		
+}
 		return false;
 	}
 
@@ -65,24 +73,28 @@ public Usuarios deleteUsuario(Long id) {
          if (user.isPresent()) {
              throw new IllegalArgumentException("El correo ya está registrado.");
          }
-
+         usuario.setPass(encoder.encode(usuario.getPass()));
          usuario.setUser_registred(LocalDate.now()); // Asigna la fecha de registro actual
          return usuariosRepository.save(usuario);
      }//addusuario
+
+     
      
   // Actualiza un usuario existente
      public Usuarios updateUsuario(Long id, ChangePassword changePassword) {
-     	Usuarios user = null;
-     	if (usuariosRepository.existsById(id)) {
-     		Usuarios usuario = usuariosRepository.findById(id).get();
-     		if(usuario.getPass().equals(changePassword.getPassword())) {
-     			usuario.setPass(changePassword.getNpassword());
-     			user=usuario;
-     			usuariosRepository.save(usuario);
-     		}//equals
-     				
-     	}//exists
-     			
-     	return user;
-     }//update
+         if (usuariosRepository.existsById(id)) {
+             Usuarios usuario = usuariosRepository.findById(id).get();
+             if(encoder.matches(changePassword.getPassword(), usuario.getPass())) {
+                 usuario.setPass(encoder.encode(changePassword.getNpassword()));
+                 usuariosRepository.save(usuario);
+                 return usuario; // Devuelve el usuario actualizado
+             } else {
+                 return null; // Devuelve null si la contraseña actual es incorrecta
+             }
+         } else {
+             return null; // Devuelve null si el usuario no se encuentra
+         }
+     }
+
+
      }//UsuarioService

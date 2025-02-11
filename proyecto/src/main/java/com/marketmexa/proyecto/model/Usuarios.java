@@ -1,4 +1,5 @@
-package com.marketmexa.proyecto.model; //USERS
+package com.marketmexa.proyecto.model;
+
 
 import java.time.LocalDate;
 

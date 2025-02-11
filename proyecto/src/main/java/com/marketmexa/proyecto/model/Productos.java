@@ -16,7 +16,7 @@ public class Productos {
     private Long id;
 	@Column(nullable=false, unique = true, name="name")
     private String name;
-    @Column(nullable=true, unique = true, name="description")
+    @Column(nullable=false, unique = true, name="description")
     private String description;
     @Column(nullable=false, unique = true, name="image")
     private String image;
@@ -25,7 +25,8 @@ public class Productos {
     @Column(nullable=false, unique = true, name="stock")
     private Integer stock;
     //private static Long cont =Long.valueOf(0);
-    
+  
+       
        
     
     // Constructor con todos los parámetros excepto el ID
@@ -39,14 +40,15 @@ public class Productos {
         
     }
     // Constructor 
-    public Productos() {
-    	//this.id = ++cont;
-    }
+    public Productos() {}
+    
     // Getters y Setters
+    
     public Long getId() {
         return id;
     }
-    public void setId(Long id) {
+	
+	public void setId(Long id) {
         this.id = id;
     }
     public String getName() {
@@ -55,7 +57,7 @@ public class Productos {
     public void setName(String name) {
         this.name = name;
     }
-    public String getDescripcion() {
+    public String getDescription() {
         return description;
     }
     public void setDescription(String description) {
@@ -85,4 +87,5 @@ public class Productos {
         return "Producto [id=" + id + ", name=" + name + ", description=" + description 
                 + ", image=" + image + ", price=" + price + ", stock=" + stock + "]";
     }
+	
 }
