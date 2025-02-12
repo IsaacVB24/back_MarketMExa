@@ -18,8 +18,8 @@ public class ProyectoApplication {
 		FilterRegistrationBean<JwtFilter> registrationBean =
 				new FilterRegistrationBean<JwtFilter>();
 		registrationBean.setFilter(new JwtFilter());
-		registrationBean.addUrlPatterns("/api/productos/*");
-		registrationBean.addUrlPatterns("/api/usuarios/*");
+		registrationBean.addUrlPatterns("/api/productos/");
+		registrationBean.addUrlPatterns("/api/usuarios/");
 		return registrationBean;
 	}//jwtFilter
 }

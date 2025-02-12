@@ -12,7 +12,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 public class JwtFilter extends GenericFilterBean {
-	public static String secret = "#VasAIntentarAdivinar#)CH49#GenerationMX";	// No incluir ¿, ?, acentos
+	public static String secret = "#VasAIntentarAdivinar_:)CH49-GenerationMX";	// No incluir ¿, ?, acentos
 	// Este filtro se coloca en toda la aplicación (EcommerceApplication.java)
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

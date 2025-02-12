@@ -7,7 +7,7 @@ VALUES
 ('Juan Pérez', 'juan.perez@example.com', '555-9012', 'juanSecure789', '2024-12-22', 'GUADALAJARA'),
 ('Juan Pérez', 'juan.perez.G@example.com', '555-8970', 'JuanPG', '2024-11-24', 'COYOACAN'),
 ('Raimundo Gonzales', 'raimundog@example.com', '556-9854', 'graiM', '2024-10-13', 'TLAXCALA');
--- SELECT*FROM users;
+SELECT*FROM users;
 
 INSERT INTO `products`(`name`, `description`, `price`,  `stock`,  `image`)
 VALUE 
@@ -27,4 +27,3 @@ VALUES (1, 4, 898, now()),
 (4, 7, 2, now()),
 (5, 8, 1, now());
 -- SELECT * FROM orders;
-
