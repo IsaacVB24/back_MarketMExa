@@ -82,19 +82,19 @@ public Usuarios deleteUsuario(Long id) {
      
   // Actualiza un usuario existente
      public Usuarios updateUsuario(Long id, ChangePassword changePassword) {
+    	 Usuarios user= null;
          if (usuariosRepository.existsById(id)) {
              Usuarios usuario = usuariosRepository.findById(id).get();
              if(encoder.matches(changePassword.getPassword(), usuario.getPass())) {
                  usuario.setPass(encoder.encode(changePassword.getNpassword()));
+                 
+                 user=usuario;// Devuelve el usuario actualizado
                  usuariosRepository.save(usuario);
-                 return usuario; // Devuelve el usuario actualizado
-             } else {
-                 return null; // Devuelve null si la contraseña actual es incorrecta
-             }
-         } else {
-             return null; // Devuelve null si el usuario no se encuentra
-         }
+             } 
+         } 
+         return user;
      }
+
 
 
      }//UsuarioService
