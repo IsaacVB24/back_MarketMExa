@@ -15,7 +15,7 @@ CREATE TABLE `users` (
     `phone` VARCHAR(50) NOT NULL UNIQUE,
     `pass` VARCHAR(60) NOT NULL,
     `user_registred` DATE NOT NULL DEFAULT (CURRENT_DATE),
-    `addres` VARCHAR(100) NOT NULL
+    `address` VARCHAR(100) NOT NULL
 );
 
 
