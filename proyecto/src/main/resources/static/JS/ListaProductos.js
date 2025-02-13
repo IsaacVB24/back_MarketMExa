@@ -7,7 +7,7 @@ const divLineaBlanca = get("lineaBlanca");
 //Productos sacados del BackEnd
 async function fetchProductos() {
     try {
-        const response = await fetch('http://localhost:8080/api/productos'); //Si es que si es Local :C
+        const response = await fetch('http://18.191.30.217/api/productos/');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -20,34 +20,36 @@ async function fetchProductos() {
 }
 
 function mostrarCards(productos) {
+	console.log(productos);
     productos.forEach((producto, index) => {
-        const descripcionCorta = producto.descripcion.slice(0, 100) + '...'; // Limitar descripción a 100 caracteres
+        const descripcionCorta = producto.description.slice(0, 100) + '...'; // Limitar descripción a 100 caracteres
         const card = `
-        <div class="card mb-3" id="card_${producto.name}_${producto.categoria}_${index}" style="max-width: 540px;">
+        <div class="card mb-3" id="card_${producto.name}_${producto?.categoria}_${index}" style="max-width: 540px;">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="${producto.img}" class="img-fluid rounded-start" alt="${producto.name}">
+                    <img src="${producto.image}" class="img-fluid rounded-start" alt="${producto.name}">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title" id="${index}_${producto.name}">${producto.name}</h5>
-                        <p class="card-text" id="descripcion_${index}" data-full-text="${producto.descripcion}">
+                        <p class="card-text" id="descripcion_${index}" data-full-text="${producto.description}">
                             ${descripcionCorta}
                         </p>
                         <button class="btn btn-link p-0 ver-mas" onclick="toggleDescripcion(${index})">Ver más</button>
-                        <p class="card-text mt-2"><strong>Precio:</strong> $<span id="precio_${index}_${producto.name}">${producto.precio}</span> MXN</p>
+                        <p class="card-text mt-2"><strong>Precio:</strong> $<span id="precio_${index}_${producto.name}">${producto.price}</span> MXN</p>
                         <div class="d-flex align-items-center">
                             <p class="mt-3" style="margin-right:30px">Cantidad: </p>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="decrementarCantidad('input_${producto.categoria}_${index}_${producto.name}')">-</button>
-                            <p id="input_${producto.categoria}_${index}_${producto.name}" class="pt-3 mx-2 text-center" style="width: 60px;">1</p>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="incrementarCantidad('input_${producto.categoria}_${index}_${producto.name}')">+</button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="decrementarCantidad('input_${producto?.categoria}_${index}_${producto.name}')">-</button>
+                            <p id="input_${producto?.categoria}_${index}_${producto.name}" class="pt-3 mx-2 text-center" style="width: 60px;">1</p>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="incrementarCantidad('input_${producto?.categoria}_${index}_${producto.name}')">+</button>
                         </div>
                         <button class="btn btn-success mt-3" onclick="agregarAlCarrito('card_${producto.name}_${producto.categoria}_${index}')">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
         </div>`;
-        get(producto.categoria).insertAdjacentHTML("beforeend", card);
+        // El get(...) debe de tener producto.category / producto.categoria
+        get('musica').insertAdjacentHTML("beforeend", card);
     });
 }
 
@@ -105,9 +107,10 @@ function mostrarDatos() {
     });
 }
 
+// Se puede puede eliminar esta función
 async function fetchingDatos() {
     try {
-        const respuesta = await mostrarDatos();
+        const respuesta = await fetchProductos();
         mostrarCards(respuesta);
     } catch (err) {
         get('contenido').innerHTML = `
@@ -118,7 +121,7 @@ async function fetchingDatos() {
     }
 }
 
-fetchingDatos(); //Obtener y mostrar los productos
+//fetchingDatos(); //Obtener y mostrar los productos
 
 //Funcion para agregar prodcto al carrito
 function agregarAlCarrito(idDivCard) {

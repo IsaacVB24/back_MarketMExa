@@ -58,13 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
         redirect: "follow"
       };
     
-      fetch("http://localhost:8080/api/login/", requestOptions)
+      fetch("http://18.191.30.217/api/login/", requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log(result);
+          // console.log(result);
           // Mostrar bienvenida y redirigir
           showAlert("¡Bienvenido/a!", "success");
           localStorage.setItem('logueado', 'true');
+          sessionStorage.setItem('token', JSON.parse(result).access);
           setTimeout(() => {
             window.location.href = "/HTML/listaProductos.html";
           }, 2000);
