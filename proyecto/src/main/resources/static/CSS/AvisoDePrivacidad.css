@@ -1,0 +1,91 @@
+body {
+    background-color: #ff9d00;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23FF231D' stroke-width='66.7' stroke-opacity='0.05' %3E%3Ccircle fill='%23ff9d00' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%23ffa208' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%23fea710' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%23feac17' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23feb01c' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%23fdb521' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%23fdba25' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23fcbe2a' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23fbc32e' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23fbc832' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23facc36' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23f9d13a' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%23f8d53e' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%23f7da41' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%23f6de45' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%23f5e349' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23f3e84c' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23F2EC50' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
+background-attachment: fixed;
+background-size: cover;
+}
+
+h1 {
+    color: var(--color-principal);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    color: var(--color-secundario);
+    margin-top: 1rem;
+    border-bottom: 2px solid var(--color-principal);
+    padding-bottom: 0.5rem;
+}
+
+section {
+    background-color: #ffffff;
+    border: 1px solid var(--color-secundario);
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 800px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+p {
+    margin: 1rem 0;
+    text-align: justify;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+}
+
+li {
+    margin: 0.5rem 0;
+}
+
+/* Botones para acciones futuras (si se requieren en la página) */
+button {
+    background-color: var(--color-principal);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--color-secundario);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    section {
+        padding: 0.5rem;
+        margin: 0.5rem auto;
+        max-width: 90%;
+    }
+
+    ul {
+        margin-left: 1.5rem;
+    }
+
+    button {
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    section {
+        padding: 0.3rem;
+        margin: 0.3rem auto;
+        max-width: 100%;
+    }
+
+    ul {
+        margin-left: 1rem;
+    }
+
+    button {
+        padding: 0.3rem 0.6rem;
+    }
+}
