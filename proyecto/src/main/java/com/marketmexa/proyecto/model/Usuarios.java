@@ -28,7 +28,7 @@ public class Usuarios {
     private String pass;
     @Column(name = "user_registred", nullable = false, columnDefinition = "date default CURRENT_DATE")
     private LocalDate user_registred;
-    @Column(nullable = false, length = 100, name="addres")
+    @Column(nullable = false, length = 100, name="address")
     private String address;
 
     public Usuarios() {
