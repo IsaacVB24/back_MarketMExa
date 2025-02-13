@@ -24,6 +24,7 @@ public class Productos {
     private Double price;
     @Column(nullable=false, unique = true, name="stock")
     private Integer stock;
+    // Falta columna de category / categoria y modificar la BD para añadir esta columna (también el script de la creación de la BD [GitHub])
     //private static Long cont =Long.valueOf(0);
   
        
