@@ -50,7 +50,7 @@ function mostrarCards(productos) {
         </div>`;
 
         // Determinar el contenedor correspondiente según la categoría del producto
-        const contenedorCategoria = document.getElementById(producto.category.toLowerCase());
+        const contenedorCategoria = document.getElementById(producto.category);
 
         if (contenedorCategoria) {
             contenedorCategoria.insertAdjacentHTML("beforeend", card);
