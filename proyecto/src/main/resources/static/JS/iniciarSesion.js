@@ -28,56 +28,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   
     // Validar formulario al enviar
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = emailField.value.trim();
-    const password = passwordField.value.trim();
-
-    // Limpiar alertas previas
-    alertContainer.innerHTML = "";
-
-    // Validar campos
-    if (!email || !password) {
-        showAlert("⚠️ Por favor, completa todos los campos.", "danger");
-        return;
-    }
-
-    if (esCorreoInvalido(email)) {
-        showAlert("⚠️ Ingresa un correo electrónico válido.", "danger");
-        return;
-    }
-
-    try {
-        const response = await fetch("http://18.191.30.217/api/login/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email, pass: password })
-        });
-
-        if (response.status === 401) {
-            showAlert("❌ Correo o contraseña incorrectos.", "danger");
-            return;
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = emailField.value.trim();
+        const password = passwordField.value.trim();
+      
+        // Limpiar alertas previas
+        alertContainer.innerHTML = "";
+      
+        // Validar campos
+        if (!email || !password) {
+          showAlert("Por favor, completa todos los campos antes de iniciar sesión.", "danger");
+          return;
         }
-
-        if (!response.ok) {
-            showAlert("❌ Error en el servidor. Inténtalo más tarde.", "danger");
-            return;
+      
+        if (esCorreoInvalido(email)) {
+          showAlert("Por favor, ingresa un correo electrónico válido.", "danger");
+          return;
         }
-
-        const result = await response.json();
-        showAlert("✅ ¡Bienvenido/a!", "success");
-        localStorage.setItem("logueado", "true");
-        sessionStorage.setItem("token", result.access);
-
-        setTimeout(() => {
-            window.location.href = "/HTML/listaProductos.html";
-        }, 2000);
-
-    } catch (error) {
-        showAlert("Correo electrónico invalido", "danger");
-    }
-});
+      
+        // Enviar solicitud de login
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        const raw = JSON.stringify({ "email": email, "pass": password });
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow"
+        };
+      
+        fetch("http://18.191.30.217/api/login/", requestOptions)
+          .then((response) => response.text())
+          .then((result) => {
+            // Mostrar bienvenida y redirigir
+            showAlert("¡Bienvenido/a!", "success");
+            localStorage.setItem('logueado', 'true');
+            sessionStorage.setItem('token', JSON.parse(result).access);
+            setTimeout(() => {
+              window.location.href = "/HTML/listaProductos.html";
+            }, 2000);
+          })
+          .catch((error) => showAlert("Correo electrónico o contraseña incorrectos.", "danger"));
+    });
   
     function showAlert(message, type) {
         const alertDiv = document.createElement("div");

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     //  Bloquear acceso si no hay sesión
     if (localStorage.getItem("logueado") !== "true") {
+       
         mostrarAlerta("⚠️ No tienes acceso a esta página. Inicia sesión primero.");
         setTimeout(() => {
             window.location.href = "../HTML/iniciarSesion.html";
@@ -34,8 +35,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const numero = tarjetaInput.value.replace(/\s/g, '');
         const mes = document.getElementById("mes").value.trim();
         const año = document.getElementById("año").value.trim();
-        const cvv = document.getElementById("cvv").value.trim();
-        const titular = document.getElementById("titular").value.trim();
         const cp = document.getElementById("cp").value.trim();
         const calle = document.getElementById("calle").value.trim();
         const colonia = document.getElementById("colonia").value.trim();
@@ -51,22 +50,11 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        if (!/^\d{3}$/.test(cvv)) {
-            mostrarAlerta("⚠️ CVV inválido.");
-            return;
-        }
-
-        if (!titular) {
-            mostrarAlerta("⚠️ Debes ingresar el nombre del titular.");
-            return;
-        }
-
         if (!cp || !calle || !colonia || !ciudad) {
             mostrarAlerta("⚠️ Debes completar la dirección de envío.");
             return;
         }
 
-        // **Mostrar mensaje de éxito y redirigir**
         mostrarAlerta("✅ Pago realizado con éxito.", true);
 
         setTimeout(() => {
@@ -85,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(() => { alerta.style.opacity = "0"; setTimeout(() => { alerta.style.display = "none"; }, 500); }, 3000);
     }
 });
+
 
 // Función para vaciar el carrito después del pago
 function vaciarCarrito() {

@@ -67,18 +67,16 @@ public Usuarios deleteUsuario(Long id) {
 	}
 
  // Agregar un nuevo usuario
-    public Usuarios addUsuario(Usuarios usuario) {
-        Optional<Usuarios> user = usuariosRepository.findByEmail(usuario.getEmail());
+     public Usuarios addUsuario(Usuarios usuario) {
+         Optional<Usuarios> user = usuariosRepository.findByEmail(usuario.getEmail());
 
-        if (user.isPresent()) {
-            return null;  // Devuelve null en lugar de lanzar una excepción
-        }
-
-        usuario.setPass(encoder.encode(usuario.getPass()));
-        usuario.setUser_registred(LocalDate.now()); // Asigna la fecha de registro actual
-        return usuariosRepository.save(usuario);
-    }
-
+         if (user.isPresent()) {
+             throw new IllegalArgumentException("El correo ya está registrado.");
+         }
+         usuario.setPass(encoder.encode(usuario.getPass()));
+         usuario.setUser_registred(LocalDate.now()); // Asigna la fecha de registro actual
+         return usuariosRepository.save(usuario);
+     }//addusuario
 
      
      

@@ -18,16 +18,13 @@ public class RegistroController {
         this.usuariosService = usuariosService;
     }
 
-    @PostMapping("/registro")
+    @PostMapping("/registro")//http:/localhost:8080/api/registro
     public ResponseEntity<String> registrarUsuario(@RequestBody Usuarios usuarioDTO) {
-        Usuarios nuevoUsuario = usuariosService.addUsuario(usuarioDTO);
-        
-        if (nuevoUsuario == null) {
-            return ResponseEntity.badRequest().body("Error: El correo ya está registrado.");
+        try {
+            Usuarios nuevoUsuario = usuariosService.addUsuario(usuarioDTO);
+            return ResponseEntity.ok("Usuario registrado exitosamente: " + nuevoUsuario.getEmail());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-
-        return ResponseEntity.ok("Usuario registrado exitosamente: " + nuevoUsuario.getEmail());
-    }
-
     }
 }

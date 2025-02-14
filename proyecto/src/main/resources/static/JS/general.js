@@ -102,29 +102,22 @@ function renderNavBar() {
 
 // Función para cerrar sesión y ocultar "Añadir producto"
 function cerrarSesion() {
-    // Eliminar datos de sesión
-    localStorage.setItem("logueado", "false");
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("archivoCuenta");
+    let usuarios = JSON.parse(sessionStorage.getItem("archivoCuenta")) || [];
+
+    // Marcar todos los usuarios como NO logueados
+    usuarios = usuarios.map(usuario => ({ ...usuario, isLoggedIn: false }));
+
+    // Guardar en sessionStorage
+    sessionStorage.setItem("archivoCuenta", JSON.stringify(usuarios));
+    localStorage.setItem("logueado", "false"); // 🔥 Establece logueado en false 🔥
 
     mostrarAlerta("✅ Has cerrado sesión correctamente.");
 
-    // Restaurar los botones de inicio de sesión y registro
-    const navContainer = document.querySelector('.navbar .d-flex');
-    navContainer.innerHTML = `
-        <button type="button" class="btn-nav m-2"><a href="../HTML/iniciarSesion.html">Iniciar sesión</a></button>
-        <button type="button" class="btn-nav m-2"><a href="../HTML/registro.html">Registrarse</a></button>
-        <a href="../HTML/carritoCompras.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart4 ms-3" viewBox="0 0 16 16">
-                <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2H8zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
-            </svg>
-        </a>
-    `;
+    // Ocultar el botón de "Añadir producto" tras cerrar sesión
+    document.getElementById('agregarProductos').style.display = 'none';
 
     // Redirigir a la página de inicio de sesión
-    setTimeout(() => {
-        window.location.href = "../HTML/iniciarSesion.html";
-    }, 2000);
+    window.location.href = "../HTML/iniciarSesion.html";
 }
 
 // Ejecutar la función al cargar la página
