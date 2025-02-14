@@ -48,7 +48,7 @@ function mostrarCards(productos) {
             </div>
         </div>`;
 
-        const contenedorCategoria = document.getElementById(producto.category.toLowerCase());
+        const contenedorCategoria = document.getElementById(producto.category);
         if (contenedorCategoria) {
             contenedorCategoria.insertAdjacentHTML("beforeend", card);
         } else {
