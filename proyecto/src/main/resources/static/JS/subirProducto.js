@@ -51,6 +51,7 @@ document.getElementById("btnEnviar").addEventListener("click", function (e) {
     "stock": parseInt(stock, 10)
   };
 
+<<<<<<< HEAD
   // **Enviar al backend con fetch**
   fetch("http://18.191.30.217/api/productos/", {
     method: "POST",
@@ -73,6 +74,71 @@ document.getElementById("btnEnviar").addEventListener("click", function (e) {
     console.error("Error:", error);
     alerta.innerHTML += "<br>Error al guardar el producto en el servidor.";
   });
+=======
+        if (errores.length > 0) {
+            alerta.classList.remove("d-none");
+            alerta.innerHTML = errores.join("<br>");
+            return;
+        }
+
+        // Subir imagen a Cloudinary antes de enviar el producto al backend
+        const file = inputImagen.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "tu_upload_preset"); // Reemplaza con tu configuración de Cloudinary
+
+        fetch("https://api.cloudinary.com/v1_1/tu_cuenta/image/upload", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            const producto = {
+                "name": nombre,
+                "description": descripcion,
+                "image": data.secure_url, // URL de la imagen subida a Cloudinary
+                "price": parseFloat(precio),
+                "category": categoriaElement.value.toLowerCase(),
+                "stock": parseInt(stock, 10)
+            };
+
+            return fetch("http://18.191.30.217/api/productos/", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer: ${token}`
+                },
+                body: JSON.stringify(producto)
+            });
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Error en la respuesta del servidor");
+            return response.json();
+        })
+        .then(data => {
+            console.log("Producto creado:", data);
+            alerta.classList.remove("d-none");
+            alerta.innerHTML = "¡Producto creado exitosamente!<br>Producto guardado en la base de datos.";
+            limpiarFormulario();
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alerta.classList.remove("d-none");
+            alerta.innerHTML = "Error al guardar el producto en el servidor.";
+        });
+    });
+
+    // **Función para limpiar el formulario**
+    function limpiarFormulario() {
+        document.getElementById("productName").value = "";
+        document.getElementById("productDescription").value = "";
+        document.getElementById("productCategory").value = "0";
+        document.getElementById("productPrice").value = "";
+        document.getElementById("productStock").value = "";
+        document.getElementById("imageUpload").value = ""; // Limpiar input de imagen
+        imagenProducto.style.display = "none"; // Ocultar vista previa
+    }
+>>>>>>> 63175d4457a63c490a8b52abd6dd619d272439bb
 });
 
 // **Función para limpiar el formulario**

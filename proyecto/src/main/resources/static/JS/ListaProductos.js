@@ -20,7 +20,7 @@ async function fetchProductos() {
 }
 
 function mostrarCards(productos) {
-    console.log(productos);
+    //console.log(productos);
     productos.forEach((producto, index) => {
         const descripcionCorta = producto.description.slice(0, 100) + '...'; // Limitar descripción a 100 caracteres
         const card = `
