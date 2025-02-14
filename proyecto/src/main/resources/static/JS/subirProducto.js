@@ -51,7 +51,6 @@ document.getElementById("btnEnviar").addEventListener("click", function (e) {
     "stock": parseInt(stock, 10)
   };
 
-<<<<<<< HEAD
   // **Enviar al backend con fetch**
   fetch("http://18.191.30.217/api/productos/", {
     method: "POST",
@@ -74,7 +73,6 @@ document.getElementById("btnEnviar").addEventListener("click", function (e) {
     console.error("Error:", error);
     alerta.innerHTML += "<br>Error al guardar el producto en el servidor.";
   });
-=======
         if (errores.length > 0) {
             alerta.classList.remove("d-none");
             alerta.innerHTML = errores.join("<br>");
@@ -138,8 +136,6 @@ document.getElementById("btnEnviar").addEventListener("click", function (e) {
         document.getElementById("imageUpload").value = ""; // Limpiar input de imagen
         imagenProducto.style.display = "none"; // Ocultar vista previa
     }
->>>>>>> 63175d4457a63c490a8b52abd6dd619d272439bb
-});
 
 // **Función para limpiar el formulario**
 function limpiarFormulario() {
