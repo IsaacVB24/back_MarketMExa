@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 "stock": parseInt(stock, 10)
             };
 
-            return fetch("http://localhost:8080/api/productos/", {
+            return fetch("http://18.191.30.217/api/productos/", {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer: ${token}`
                 },
                 body: JSON.stringify(producto)
             });

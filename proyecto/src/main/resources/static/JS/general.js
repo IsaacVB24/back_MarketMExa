@@ -20,7 +20,7 @@ const estructuraNav = `
                     <a class="nav-link" href="../HTML/AcercaDeNosotros.html">Acerca de nosotros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../HTML/subirProducto.html" style="display: ${sessionStorage.getItem('logueado') == 'true' ? 'block' : 'none'};" id="agregarProductos">Añadir producto</a>
+                    <a class="nav-link" href="../HTML/subirProducto.html" style="display: ${localStorage.getItem('logueado') == 'true' ? 'block' : 'none'};" id="agregarProductos">Añadir producto</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">
@@ -60,7 +60,7 @@ document.head.appendChild(fontLink);
 function renderNavBar() {
     const navContainer = document.querySelector('.navbar .d-flex');
     const usuarios = JSON.parse(sessionStorage.getItem('archivoCuenta')) || [];
-    const usuarioLogueado = usuarios.find((usuario) => usuario.isLoggedIn);
+    const usuarioLogueado = Boolean(localStorage.getItem('logueado'));
 
     // Control de visibilidad del botón "Añadir producto"
     const agregarProductos = document.getElementById('agregarProductos');
@@ -77,14 +77,14 @@ function renderNavBar() {
         // Agregar el botón de usuario con el nuevo diseño y dropdown
         navContainer.insertAdjacentHTML(
             'afterbegin',
-            `<div class="dropdown user-container">
+            `<div class="dropdown user-container" style="display: ${localStorage.getItem('logueado') == 'true' ? 'block' : 'none'};">
                 <button class="button btn-usuario dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="user-icon" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                         </svg>
-                        <span class="user-name">${usuarioLogueado.username}</span>
+                        <span class="user-name">Flor Martinez</span>
                     </div>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -109,7 +109,7 @@ function cerrarSesion() {
 
     // Guardar en sessionStorage
     sessionStorage.setItem("archivoCuenta", JSON.stringify(usuarios));
-    sessionStorage.setItem("logueado", "false"); // 🔥 Establece logueado en false 🔥
+    localStorage.setItem("logueado", "false"); // 🔥 Establece logueado en false 🔥
 
     mostrarAlerta("✅ Has cerrado sesión correctamente.");
 

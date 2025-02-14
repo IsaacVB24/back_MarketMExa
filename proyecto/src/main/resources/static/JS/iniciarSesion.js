@@ -48,17 +48,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       
         // Enviar solicitud de login
-        const usuarios = JSON.parse(sessionStorage.getItem("archivoCuenta")) || [];
-        const usuarioEncontrado = usuarios.find(usuario => usuario.email === email && usuario.password === password);
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        const raw = JSON.stringify({ "email": email, "pass": password });
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow"
+        };
       
-        if (usuarioEncontrado) {
-          usuarioEncontrado.isLoggedIn = true;
-          sessionStorage.setItem("archivoCuenta", JSON.stringify(usuarios));
-          sessionStorage.setItem("logueado", "true");
-          window.location.href = "/HTML/listaProductos.html";
-        } else {
-          showAlert("Correo electrónico o contraseña incorrectos.", "danger");
-        }
+        fetch("http://18.191.30.217/api/login/", requestOptions)
+          .then((response) => response.text())
+          .then((result) => {
+            // Mostrar bienvenida y redirigir
+            showAlert("¡Bienvenido/a!", "success");
+            localStorage.setItem('logueado', 'true');
+            sessionStorage.setItem('token', JSON.parse(result).access);
+            setTimeout(() => {
+              window.location.href = "/HTML/listaProductos.html";
+            }, 2000);
+          })
+          .catch((error) => showAlert("Correo electrónico o contraseña incorrectos.", "danger"));
     });
   
     function showAlert(message, type) {
