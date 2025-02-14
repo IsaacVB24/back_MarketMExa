@@ -28,6 +28,7 @@ CREATE TABLE `products` (
     `description` VARCHAR(500),
 	`image` VARCHAR(100) NOT NULL,
     `price` FLOAT NOT NULL,
+     `category` VARCHAR(100) NOT NULL,
     `stock` INT NOT NULL
           );        
           
