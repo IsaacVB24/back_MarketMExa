@@ -47,12 +47,13 @@ public class ProductosController {
                                    @RequestParam(required=false) String name,
                                    @RequestParam(required=false) String description,
                                    @RequestParam(required=false) String image,
+                                   @RequestParam(required=false) String category, 
                                    @RequestParam(required=false) Double price,
                                    @RequestParam(required=false) Integer stock) {
 
                                 
                                                                     
                                    
-        return productosService.updateProduct(id, name, description, image, price, stock);
+        return productosService.updateProduct(id, name, description, image, category, price, stock);
     }
 }

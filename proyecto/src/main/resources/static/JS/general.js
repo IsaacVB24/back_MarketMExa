@@ -20,7 +20,7 @@ const estructuraNav = `
                     <a class="nav-link" href="../HTML/AcercaDeNosotros.html">Acerca de nosotros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../HTML/subirProducto.html" style="display: ${localStorage.getItem('logueado') == 'true' ? 'block' : 'none'};" id="agregarProductos">Añadir producto</a>
+                    <a class="nav-link" href="../HTML/subirProducto.html" style="display: ${sessionStorage.getItem('logueado') == 'true' ? 'block' : 'none'};" id="agregarProductos">Añadir producto</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">
@@ -28,7 +28,7 @@ const estructuraNav = `
                 <button type="button" class="btn-nav m-2"><a href="../HTML/registro.html">Registrarse</a></button>
                 <a href="../HTML/carritoCompras.html">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart4 ms-3" viewBox="0 0 16 16">
-                        <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+                        <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2H8zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
                     </svg>
                 </a>
             </div>
@@ -59,7 +59,7 @@ document.head.appendChild(fontLink);
 // Actualizar la barra de navegación al iniciar sesión
 function renderNavBar() {
     const navContainer = document.querySelector('.navbar .d-flex');
-    const usuarios = JSON.parse(localStorage.getItem('archivoCuenta')) || [];
+    const usuarios = JSON.parse(sessionStorage.getItem('archivoCuenta')) || [];
     const usuarioLogueado = usuarios.find((usuario) => usuario.isLoggedIn);
 
     // Control de visibilidad del botón "Añadir producto"
@@ -102,14 +102,14 @@ function renderNavBar() {
 
 // Función para cerrar sesión y ocultar "Añadir producto"
 function cerrarSesion() {
-    let usuarios = JSON.parse(localStorage.getItem("archivoCuenta")) || [];
+    let usuarios = JSON.parse(sessionStorage.getItem("archivoCuenta")) || [];
 
     // Marcar todos los usuarios como NO logueados
     usuarios = usuarios.map(usuario => ({ ...usuario, isLoggedIn: false }));
 
-    // Guardar en localStorage
-    localStorage.setItem("archivoCuenta", JSON.stringify(usuarios));
-    localStorage.setItem("logueado", "false"); // 🔥 Establece logueado en false 🔥
+    // Guardar en sessionStorage
+    sessionStorage.setItem("archivoCuenta", JSON.stringify(usuarios));
+    sessionStorage.setItem("logueado", "false"); // 🔥 Establece logueado en false 🔥
 
     mostrarAlerta("✅ Has cerrado sesión correctamente.");
 
@@ -121,9 +121,7 @@ function cerrarSesion() {
 }
 
 // Ejecutar la función al cargar la página
-window.addEventListener('load', renderNavBar);
-
-
+document.addEventListener('DOMContentLoaded', renderNavBar);
 
 function get(id) {
     return document.getElementById(id);
@@ -131,7 +129,7 @@ function get(id) {
 
 function verificarContainer() {
     if (!document.querySelector('#contenido')) {
-        document.body.insertAdjacentHTML('beforeend', `<h1>PÁGINA EN CONSTRUCCIÓN</h1>`);
+        document.body.insertAdjacentHTML('beforeend', '<h1>PÁGINA EN CONSTRUCCIÓN</h1>');
     }
 }
 
@@ -162,9 +160,6 @@ inyectarFavicon();
 // Añadir la clase con estilos en general.css
 document.body.classList.add('fondoDegradado');
 
-// Ejecutar la función al cargar la página
-window.addEventListener('load', renderNavBar);
-
 /* ------------- Funciones de validación -------------- */
 
 const regexEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
@@ -194,6 +189,7 @@ function esPasswordIncorrecto(password) {
 // Función para mostrar u ocultar la contraseña
 function toggleVisibilidadContraseña(icono) {
     icono.addEventListener('click', function() {
+        const pass = document.getElementById('pass');
         if (pass.type === 'password') {
             pass.type = 'text';
         } else {
@@ -202,7 +198,7 @@ function toggleVisibilidadContraseña(icono) {
     });
 }
 
-//  Función para mostrar alerta flotante
+// Función para mostrar alerta flotante
 function mostrarAlerta(mensaje) {
     let alerta = document.getElementById("alerta-flotante");
 

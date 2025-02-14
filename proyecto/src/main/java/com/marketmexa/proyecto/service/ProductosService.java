@@ -50,20 +50,20 @@ public class ProductosService {
 	}
 
 
-	
-	// Método para modificar la información de un producto por su ID e información
-	public Productos updateProduct(Long id, String name, String description, String image, Double price, Integer stock) {
-		Productos prod = null;
-		if (productosRepository.existsById(id)) {
-			Productos producto = productosRepository.findById(id).get();
-				if(name != null) producto.setName(name);
-				if(description != null) producto.setDescription(description);
-				if(image != null) producto.setImage(image);
-				if(price != null) producto.setPrice(price);
-				if(stock != null) producto.setStock(stock);
-				productosRepository.save(producto);
-				prod = producto;
-			}
-		return prod;
-	}
-	}
+ // Método para modificar la información de un producto por su ID e información
+ 	public Productos updateProduct(Long id, String name, String description, String image, String category, Double price, Integer stock) {
+ 		Productos prod = null;
+ 		if (productosRepository.existsById(id)) {
+ 			Productos producto = productosRepository.findById(id).get();
+ 				if(name != null) producto.setName(name);
+ 				if(description != null) producto.setDescription(description);
+ 				if(image != null) producto.setImage(image);
+ 				if(price != null) producto.setPrice(price);
+                 if(category != null) producto.setName(category);
+ 				if(stock != null) producto.setStock(stock);
+ 				productosRepository.save(producto);
+ 				prod = producto;
+ 			}
+ 		return prod;
+ 	}
+ 	}

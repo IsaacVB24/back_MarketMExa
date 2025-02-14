@@ -22,6 +22,8 @@ public class Productos {
     private String image;
     @Column(nullable=false, unique = true, name="price")
     private Double price;
+    @Column(nullable=false, unique = false, name="category")
+    private String category;
     @Column(nullable=false, unique = true, name="stock")
     private Integer stock;
     // Falta columna de category / categoria y modificar la BD para añadir esta columna (también el script de la creación de la BD [GitHub])
@@ -31,14 +33,13 @@ public class Productos {
        
     
     // Constructor con todos los parámetros excepto el ID
-    public Productos(String name, String description, String image, Double price, Integer stock) {
-       // this.id= ++cont;      
-    	this.name = name;
+    public Productos(String name, String description, String image, Double price, String category, Integer stock) {
+        this.name = name;
         this.description = description;
         this.image = image;
         this.price = price;
+        this.category = category;
         this.stock = stock;
-        
     }
     // Constructor 
     public Productos() {}
@@ -82,11 +83,19 @@ public class Productos {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
-    // Método toString 
-    @Override
-    public String toString() {
-        return "Producto [id=" + id + ", name=" + name + ", description=" + description 
-                + ", image=" + image + ", price=" + price + ", stock=" + stock + "]";
+
+    public String getCategory() {
+        return category;
     }
-	
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+
+  // Método toString 
+@Override
+public String toString() {
+    return "Producto [id=" + id + ", name=" + name + ", description=" + description 
+            + ", image=" + image + ", price=" + price + ", category=" + category 
+            + ", stock=" + stock + "]";}	
 }

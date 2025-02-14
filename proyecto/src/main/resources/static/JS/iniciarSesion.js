@@ -28,63 +28,48 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   
     // Validar formulario al enviar
-  loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = emailField.value.trim();
-      const password = passwordField.value.trim();
-    
-      // Limpiar alertas previas
-      alertContainer.innerHTML = "";
-    
-      // Validar campos
-      if (!email || !password) {
-        showAlert("Por favor, completa todos los campos antes de iniciar sesión.", "danger");
-        return;
-      }
-    
-      if (esCorreoInvalido(email)) {
-        showAlert("Por favor, ingresa un correo electrónico válido.", "danger");
-        return;
-      }
-    
-      // Enviar solicitud de login
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      const raw = JSON.stringify({ "email": email, "pass": password });
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow"
-      };
-    
-      fetch("http://18.191.30.217/api/login/", requestOptions)
-        .then((response) => response.text())
-        .then((result) => {
-          // console.log(result);
-          // Mostrar bienvenida y redirigir
-          showAlert("¡Bienvenido/a!", "success");
-          localStorage.setItem('logueado', 'true');
-          sessionStorage.setItem('token', JSON.parse(result).access);
-          setTimeout(() => {
-            window.location.href = "/HTML/listaProductos.html";
-          }, 2000);
-        })
-        .catch((error) => console.error(error));
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = emailField.value.trim();
+        const password = passwordField.value.trim();
+      
+        // Limpiar alertas previas
+        alertContainer.innerHTML = "";
+      
+        // Validar campos
+        if (!email || !password) {
+          showAlert("Por favor, completa todos los campos antes de iniciar sesión.", "danger");
+          return;
+        }
+      
+        if (esCorreoInvalido(email)) {
+          showAlert("Por favor, ingresa un correo electrónico válido.", "danger");
+          return;
+        }
+      
+        // Enviar solicitud de login
+        const usuarios = JSON.parse(sessionStorage.getItem("archivoCuenta")) || [];
+        const usuarioEncontrado = usuarios.find(usuario => usuario.email === email && usuario.password === password);
+      
+        if (usuarioEncontrado) {
+          usuarioEncontrado.isLoggedIn = true;
+          sessionStorage.setItem("archivoCuenta", JSON.stringify(usuarios));
+          sessionStorage.setItem("logueado", "true");
+          window.location.href = "/HTML/listaProductos.html";
+        } else {
+          showAlert("Correo electrónico o contraseña incorrectos.", "danger");
+        }
     });
   
-    // Mostrar alertas
     function showAlert(message, type) {
-      const alertHTML = `
-        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-          ${message}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      `;
-      alertContainer.innerHTML = alertHTML;
-      // Limpiar alerta después de 3 segundos
-      setTimeout(() => {
-        alertContainer.innerHTML = "";
-      }, 3000);
+        const alertDiv = document.createElement("div");
+        alertDiv.className = `alert alert-${type}`;
+        alertDiv.textContent = message;
+        alertContainer.appendChild(alertDiv);
     }
-  });
+
+    function esCorreoInvalido(correo) {
+        const regexEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+        return !regexEmail.test(correo);
+    }
+});

@@ -20,11 +20,11 @@ async function fetchProductos() {
 }
 
 function mostrarCards(productos) {
-	console.log(productos);
+    console.log(productos);
     productos.forEach((producto, index) => {
         const descripcionCorta = producto.description.slice(0, 100) + '...'; // Limitar descripción a 100 caracteres
         const card = `
-        <div class="card mb-3" id="card_${producto.name}_${producto?.categoria}_${index}" style="max-width: 540px;">
+        <div class="card mb-3" id="card_${producto.name}_${producto?.category}_${index}" style="max-width: 540px;">
             <div class="row g-0">
                 <div class="col-md-4">
                     <img src="${producto.image}" class="img-fluid rounded-start" alt="${producto.name}">
@@ -39,19 +39,27 @@ function mostrarCards(productos) {
                         <p class="card-text mt-2"><strong>Precio:</strong> $<span id="precio_${index}_${producto.name}">${producto.price}</span> MXN</p>
                         <div class="d-flex align-items-center">
                             <p class="mt-3" style="margin-right:30px">Cantidad: </p>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="decrementarCantidad('input_${producto?.categoria}_${index}_${producto.name}')">-</button>
-                            <p id="input_${producto?.categoria}_${index}_${producto.name}" class="pt-3 mx-2 text-center" style="width: 60px;">1</p>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="incrementarCantidad('input_${producto?.categoria}_${index}_${producto.name}')">+</button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="decrementarCantidad('input_${producto?.category}_${index}_${producto.name}')">-</button>
+                            <p id="input_${producto?.category}_${index}_${producto.name}" class="pt-3 mx-2 text-center" style="width: 60px;">1</p>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="incrementarCantidad('input_${producto?.category}_${index}_${producto.name}')">+</button>
                         </div>
-                        <button class="btn btn-success mt-3" onclick="agregarAlCarrito('card_${producto.name}_${producto.categoria}_${index}')">Agregar al carrito</button>
+                        <button class="btn btn-success mt-3" onclick="agregarAlCarrito('card_${producto.name}_${producto.category}_${index}')">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
         </div>`;
-        // El get(...) debe de tener producto.category / producto.categoria
-        get('musica').insertAdjacentHTML("beforeend", card);
+
+        // Determinar el contenedor correspondiente según la categoría del producto
+        const contenedorCategoria = document.getElementById(producto.category.toLowerCase());
+
+        if (contenedorCategoria) {
+            contenedorCategoria.insertAdjacentHTML("beforeend", card);
+        } else {
+            console.warn(`No se encontró la categoría: ${producto.category} para el producto ${producto.name}`);
+        }
     });
 }
+
 
 function toggleDescripcion(index) {
     const descripcion = document.getElementById(`descripcion_${index}`);
