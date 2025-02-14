@@ -88,12 +88,13 @@ registroForm.addEventListener("submit", async (event) => {
             // Limpiar el formulario y redirigir a la página de inicio de sesión
             registroForm.reset();
             setTimeout(() => {
-                //window.location.href = "/HTML/iniciarSesion.html";
+                window.location.href = "/HTML/iniciarSesion.html";
             }, 2000);
           }
         })
         .catch((error) => {
-          throw new Error("Error en el registro:" `${error}`);
+          showAlert("Registro completado con éxito. Redirigiendo al inicio de sesión...", "success");
+          throw new Error("Correo ya registrado:" `${error}`);
         });
     } catch (error) {
 		    console.log(error);
